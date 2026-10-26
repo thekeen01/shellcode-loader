@@ -1,5 +1,5 @@
 # shellcode-loader
-very simpler shellcode loader with xor decoding optimized for size. The maximum size of the shellcode is currently 4096 bytes but you can adjust it in the loader.asm if you need more. This is x86-64 only
+very simple shellcode loader with xor decoding optimized for size. The maximum size of the shellcode is currently 4096 bytes but you can adjust it in the loader.asm if you need more. This is x86-64 only
 
 # how to use
 
